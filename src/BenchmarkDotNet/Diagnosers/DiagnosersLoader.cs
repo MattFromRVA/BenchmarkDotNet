@@ -85,7 +85,6 @@ namespace BenchmarkDotNet.Diagnosers
                 ConsoleLogger.Default.WriteLineWarning($"Warning: Could not load {WindowsDiagnosticAssemblyFileName}. {ex.GetType().Name} - {ex.Message}");
                 return Array.Empty<IDiagnoser>();
             }
-
         }
 
         private static IDiagnoser CreateDiagnoser(Assembly loadedAssembly, string typeName)
