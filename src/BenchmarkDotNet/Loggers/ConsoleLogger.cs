@@ -66,17 +66,8 @@ namespace BenchmarkDotNet.Loggers
             }
         }
 
-        private ConsoleColor GetColor(LogKind logKind)
-        {
-            if (colorScheme.TryGetValue(logKind, out var color))
-                return color;
-
-            if (logKind == LogKind.Warning)
-                return ConsoleColor.Yellow;
-
-            return DefaultColor;
-        }
-
+        private ConsoleColor GetColor(LogKind logKind) =>
+     colorScheme.ContainsKey(logKind) ? colorScheme[logKind] : DefaultColor;
 
         private static Dictionary<LogKind, ConsoleColor> CreateColorfulScheme() =>
             new Dictionary<LogKind, ConsoleColor>
@@ -88,7 +79,8 @@ namespace BenchmarkDotNet.Loggers
                 { LogKind.Statistic, ConsoleColor.Cyan },
                 { LogKind.Info, ConsoleColor.DarkYellow },
                 { LogKind.Error, ConsoleColor.Red },
-                { LogKind.Hint, ConsoleColor.DarkCyan }
+                { LogKind.Hint, ConsoleColor.DarkCyan },
+                { LogKind.Warning, ConsoleColor.Yellow },
             };
 
         [PublicAPI]
