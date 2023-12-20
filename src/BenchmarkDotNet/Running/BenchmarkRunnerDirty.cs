@@ -86,34 +86,10 @@ namespace BenchmarkDotNet.Running
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static Summary RunWithDirtyAssemblyResolveHelper(Type type, IConfig? config, string[]? args)
-        {
-            // Set up Ctrl+C event handler
-            Console.CancelKeyPress += (sender, eventArgs) =>
-            {
-                Console.WriteLine("Ctrl+C pressed. Cleaning up...");
-                // Perform necessary clean-up
-                //var powerManager = new PowerManagementApplier(); //need logger here
-                //PowerManagementApplier.Dispose();
-                eventArgs.Cancel = true; // Prevent the process from terminating immediately
-            };
-
-            try
-            {
-                return (args == null
-                    ? BenchmarkRunnerClean.Run(new[] { BenchmarkConverter.TypeToBenchmarks(type, config) })
-                    : new BenchmarkSwitcher(new[] { type }).RunWithDirtyAssemblyResolveHelper(args, config, false))
-                    .Single();
-            }
-            finally
-            {
-                // Clean up the event handler
-                Console.CancelKeyPress -= (sender, eventArgs) =>
-                {
-                    // Event handler logic
-                };
-            }
-        }
-
+            => (args == null
+                ? BenchmarkRunnerClean.Run(new[] { BenchmarkConverter.TypeToBenchmarks(type, config) })
+                : new BenchmarkSwitcher(new[] { type }).RunWithDirtyAssemblyResolveHelper(args, config, false))
+                .Single();
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static Summary RunWithDirtyAssemblyResolveHelper(Type type, MethodInfo[] methods, IConfig? config = null)
