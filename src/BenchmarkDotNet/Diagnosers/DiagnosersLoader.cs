@@ -82,10 +82,10 @@ namespace BenchmarkDotNet.Diagnosers
             }
             catch (Exception ex) // we're loading a plug-in, better to be safe rather than sorry
             {
-                ConsoleLogger.Default.WriteLineError($"Error loading {WindowsDiagnosticAssemblyFileName}: {ex.GetType().Name} - {ex.Message}");
-
+                ConsoleLogger.Default.WriteLineWarning($"Warning: Could not load {WindowsDiagnosticAssemblyFileName}. {ex.GetType().Name} - {ex.Message}");
                 return Array.Empty<IDiagnoser>();
             }
+
         }
 
         private static IDiagnoser CreateDiagnoser(Assembly loadedAssembly, string typeName)

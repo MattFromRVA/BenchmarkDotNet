@@ -22,6 +22,8 @@ namespace BenchmarkDotNet.Loggers
 
         public static void Write(this ILogger logger, string text) => logger.Write(LogKind.Default, text);
 
+        public static void WriteLineWarning(this ILogger logger, string text) => logger.WriteLine(LogKind.Warning, text);
+
         [PublicAPI]
         public static void WriteHelp(this ILogger logger, string text) => logger.Write(LogKind.Help, text);
 
